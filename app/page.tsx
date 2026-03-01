@@ -40,7 +40,7 @@ const Home = () => {
         <MetricChart data={entries} metric={metric} />
       </div>
       <div className="flex justify-center">
-        <AddEntryDialog onAdd={handleAdd} />
+        <AddEntryDialog onAdd={handleAdd} lastEntry={entries.at(-1)} />
       </div>
     </main>
   );

@@ -9,6 +9,7 @@ import type { Entry } from "@/lib/types";
 
 interface AddEntryDialogProps {
   onAdd: (entry: Entry) => Promise<boolean>;
+  lastEntry?: Entry;
 }
 
 const todayISO = () => {
@@ -23,9 +24,16 @@ const FIELDS = [
   { id: "waist", label: "Waist (inches)", type: "number" },
 ] as const;
 
-export const AddEntryDialog = ({ onAdd }: AddEntryDialogProps) => {
+const defaults = (lastEntry?: Entry) => ({
+  date: todayISO(),
+  weight: lastEntry?.weight.toString() ?? "",
+  bmi: lastEntry?.bmi.toString() ?? "",
+  waist: lastEntry?.waist.toString() ?? "",
+});
+
+export const AddEntryDialog = ({ onAdd, lastEntry }: AddEntryDialogProps) => {
   const [open, setOpen] = useState(false);
-  const [values, setValues] = useState({ date: todayISO(), weight: "", bmi: "", waist: "" });
+  const [values, setValues] = useState(defaults(lastEntry));
 
   const updateField = (id: string, value: string) => setValues((prev) => ({ ...prev, [id]: value }));
 
@@ -39,12 +47,18 @@ export const AddEntryDialog = ({ onAdd }: AddEntryDialogProps) => {
     const ok = await onAdd({ date: values.date, weight, bmi, waist });
     if (!ok) return;
 
-    setValues({ date: todayISO(), weight: "", bmi: "", waist: "" });
+    setValues(defaults(lastEntry));
     setOpen(false);
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(next) => {
+        if (next) setValues(defaults(lastEntry));
+        setOpen(next);
+      }}
+    >
       <DialogTrigger asChild>
         <Button size="lg">Add Entry</Button>
       </DialogTrigger>
