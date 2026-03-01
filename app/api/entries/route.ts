@@ -2,12 +2,12 @@ import { NextResponse } from "next/server";
 import { readEntries, addEntry } from "@/lib/entries";
 import type { Entry } from "@/lib/types";
 
-export async function GET() {
+export const GET = async () => {
   const entries = readEntries();
   return NextResponse.json(entries);
-}
+};
 
-export async function POST(request: Request) {
+export const POST = async (request: Request) => {
   const body = (await request.json()) as Partial<Entry>;
 
   if (!body.date || body.weight == null || body.bmi == null || body.waist == null) {
@@ -23,4 +23,4 @@ export async function POST(request: Request) {
 
   const entries = addEntry(entry);
   return NextResponse.json(entries);
-}
+};

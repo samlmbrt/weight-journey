@@ -16,7 +16,7 @@ interface MetricChartProps {
   metric: Metric;
 }
 
-export function MetricChart({ data, metric }: MetricChartProps) {
+export const MetricChart = ({ data, metric }: MetricChartProps) => {
   const config = METRIC_CONFIG[metric];
 
   return (
@@ -37,4 +37,4 @@ export function MetricChart({ data, metric }: MetricChartProps) {
       </LineChart>
     </ResponsiveContainer>
   );
-}
+};

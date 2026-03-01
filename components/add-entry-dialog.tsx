@@ -11,18 +11,16 @@ interface AddEntryDialogProps {
   onAdd: (entry: Entry) => void;
 }
 
-function todayISO() {
-  return new Date().toISOString().split("T")[0];
-}
+const todayISO = () => new Date().toISOString().split("T")[0];
 
-export function AddEntryDialog({ onAdd }: AddEntryDialogProps) {
+export const AddEntryDialog = ({ onAdd }: AddEntryDialogProps) => {
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState(todayISO);
   const [weight, setWeight] = useState("");
   const [bmi, setBmi] = useState("");
   const [waist, setWaist] = useState("");
 
-  function handleSubmit(e: React.FormEvent) {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     onAdd({
@@ -36,7 +34,7 @@ export function AddEntryDialog({ onAdd }: AddEntryDialogProps) {
     setBmi("");
     setWaist("");
     setOpen(false);
-  }
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -85,4 +83,4 @@ export function AddEntryDialog({ onAdd }: AddEntryDialogProps) {
       </DialogContent>
     </Dialog>
   );
-}
+};

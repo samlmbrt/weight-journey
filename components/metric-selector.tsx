@@ -9,7 +9,7 @@ interface MetricSelectorProps {
   onSelect: (metric: Metric) => void;
 }
 
-export function MetricSelector({ selected, onSelect }: MetricSelectorProps) {
+export const MetricSelector = ({ selected, onSelect }: MetricSelectorProps) => {
   return (
     <div className="flex gap-2 justify-center">
       {METRICS.map((metric) => (
@@ -27,4 +27,4 @@ export function MetricSelector({ selected, onSelect }: MetricSelectorProps) {
       ))}
     </div>
   );
-}
+};

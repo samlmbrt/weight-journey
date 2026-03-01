@@ -6,7 +6,7 @@ import { MetricSelector } from "@/components/metric-selector";
 import { AddEntryDialog } from "@/components/add-entry-dialog";
 import type { Entry } from "@/lib/types";
 
-export default function Home() {
+const Home = () => {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [metric, setMetric] = useState<Metric>("weight");
 
@@ -41,4 +41,6 @@ export default function Home() {
       </div>
     </main>
   );
-}
+};
+
+export default Home;
