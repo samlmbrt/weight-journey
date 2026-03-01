@@ -13,26 +13,28 @@ interface AddEntryDialogProps {
 
 const todayISO = () => new Date().toISOString().split("T")[0];
 
+const FIELDS = [
+  { id: "date", label: "Date", type: "date" },
+  { id: "weight", label: "Weight (lbs)", type: "number" },
+  { id: "bmi", label: "BMI", type: "number" },
+  { id: "waist", label: "Waist (inches)", type: "number" },
+] as const;
+
 export const AddEntryDialog = ({ onAdd }: AddEntryDialogProps) => {
   const [open, setOpen] = useState(false);
-  const [date, setDate] = useState(todayISO);
-  const [weight, setWeight] = useState("");
-  const [bmi, setBmi] = useState("");
-  const [waist, setWaist] = useState("");
+  const [values, setValues] = useState({ date: todayISO(), weight: "", bmi: "", waist: "" });
+
+  const updateField = (id: string, value: string) => setValues((prev) => ({ ...prev, [id]: value }));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     onAdd({
-      date,
-      weight: parseFloat(weight),
-      bmi: parseFloat(bmi),
-      waist: parseFloat(waist),
+      date: values.date,
+      weight: parseFloat(values.weight),
+      bmi: parseFloat(values.bmi),
+      waist: parseFloat(values.waist),
     });
-
-    setWeight("");
-    setBmi("");
-    setWaist("");
+    setValues({ date: todayISO(), weight: "", bmi: "", waist: "" });
     setOpen(false);
   };
 
@@ -46,36 +48,19 @@ export const AddEntryDialog = ({ onAdd }: AddEntryDialogProps) => {
           <DialogTitle>Add New Entry</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="date">Date</Label>
-            <Input id="date" type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
-          </div>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="weight">Weight (lbs)</Label>
-            <Input
-              id="weight"
-              type="number"
-              step="0.1"
-              value={weight}
-              onChange={(e) => setWeight(e.target.value)}
-              required
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="bmi">BMI</Label>
-            <Input id="bmi" type="number" step="0.1" value={bmi} onChange={(e) => setBmi(e.target.value)} required />
-          </div>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="waist">Waist (inches)</Label>
-            <Input
-              id="waist"
-              type="number"
-              step="0.1"
-              value={waist}
-              onChange={(e) => setWaist(e.target.value)}
-              required
-            />
-          </div>
+          {FIELDS.map(({ id, label, type }) => (
+            <div key={id} className="flex flex-col gap-2">
+              <Label htmlFor={id}>{label}</Label>
+              <Input
+                id={id}
+                type={type}
+                step={type === "number" ? "0.1" : undefined}
+                value={values[id]}
+                onChange={(e) => updateField(id, e.target.value)}
+                required
+              />
+            </div>
+          ))}
           <Button type="submit" className="mt-2">
             Save
           </Button>

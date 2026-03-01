@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MetricChart, type Metric } from "@/components/metric-chart";
+import { MetricChart } from "@/components/metric-chart";
+import type { Metric } from "@/lib/types";
 import { MetricSelector } from "@/components/metric-selector";
 import { AddEntryDialog } from "@/components/add-entry-dialog";
 import type { Entry } from "@/lib/types";
