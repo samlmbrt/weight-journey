@@ -4,6 +4,12 @@ A simple web app to visually track your weight loss journey over three metrics: 
 
 Built with Next.js, Recharts, Tailwind CSS, and shadcn/ui. Data is stored locally in a JSON file — no database needed.
 
+## Demo
+
+<!-- TODO: Replace with your video/gif -->
+
+https://github.com/user-attachments/assets/PLACEHOLDER
+
 ## Getting Started
 
 ```bash
