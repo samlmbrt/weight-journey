@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { MetricChart, type Metric } from "@/components/metric-chart";
 import { MetricSelector } from "@/components/metric-selector";
 import { AddEntryDialog } from "@/components/add-entry-dialog";
@@ -10,15 +10,11 @@ const Home = () => {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [metric, setMetric] = useState<Metric>("weight");
 
-  const fetchEntries = useCallback(async () => {
-    const res = await fetch("/api/entries");
-    const data = (await res.json()) as Entry[];
-    setEntries(data);
-  }, []);
-
   useEffect(() => {
-    fetchEntries();
-  }, [fetchEntries]);
+    fetch("/api/entries")
+      .then((res) => res.json())
+      .then((data) => setEntries(data));
+  }, []);
 
   const handleAdd = async (entry: Entry) => {
     const res = await fetch("/api/entries", {

@@ -3,7 +3,7 @@ import { readEntries, addEntry } from "@/lib/entries";
 import type { Entry } from "@/lib/types";
 
 export const GET = async () => {
-  const entries = readEntries();
+  const entries = await readEntries();
   return NextResponse.json(entries);
 };
 
@@ -21,6 +21,6 @@ export const POST = async (request: Request) => {
     waist: body.waist,
   };
 
-  const entries = addEntry(entry);
+  const entries = await addEntry(entry);
   return NextResponse.json(entries);
 };
