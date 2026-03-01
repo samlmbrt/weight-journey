@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import type { Entry } from "@/lib/types";
 
 export type Metric = "weight" | "bmi" | "waist";
@@ -32,10 +24,7 @@ export function MetricChart({ data, metric }: MetricChartProps) {
       <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="date" />
-        <YAxis
-          domain={["auto", "auto"]}
-          label={{ value: config.unit, angle: -90, position: "insideLeft" }}
-        />
+        <YAxis domain={["auto", "auto"]} label={{ value: config.unit, angle: -90, position: "insideLeft" }} />
         <Tooltip />
         <Line
           type="monotone"

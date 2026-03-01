@@ -2,13 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { Entry } from "@/lib/types";
@@ -56,13 +50,7 @@ export function AddEntryDialog({ onAdd }: AddEntryDialogProps) {
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <Label htmlFor="date">Date</Label>
-            <Input
-              id="date"
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              required
-            />
+            <Input id="date" type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
           </div>
           <div className="flex flex-col gap-2">
             <Label htmlFor="weight">Weight (lbs)</Label>
@@ -77,14 +65,7 @@ export function AddEntryDialog({ onAdd }: AddEntryDialogProps) {
           </div>
           <div className="flex flex-col gap-2">
             <Label htmlFor="bmi">BMI</Label>
-            <Input
-              id="bmi"
-              type="number"
-              step="0.1"
-              value={bmi}
-              onChange={(e) => setBmi(e.target.value)}
-              required
-            />
+            <Input id="bmi" type="number" step="0.1" value={bmi} onChange={(e) => setBmi(e.target.value)} required />
           </div>
           <div className="flex flex-col gap-2">
             <Label htmlFor="waist">Waist (inches)</Label>
