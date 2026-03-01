@@ -6,9 +6,8 @@ Built with Next.js, Recharts, Tailwind CSS, and shadcn/ui. Data is stored locall
 
 ## Demo
 
-<!-- TODO: Replace with your video/gif -->
+https://github.com/user-attachments/assets/0069955f-2ce8-4e66-86ba-6bf4aca5fa34
 
-https://github.com/user-attachments/assets/PLACEHOLDER
 
 ## Getting Started
 
