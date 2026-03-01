@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { Entry, Metric } from "@/lib/types";
 import { MetricChart } from "@/components/metric-chart";
-import type { Metric } from "@/lib/types";
 import { MetricSelector } from "@/components/metric-selector";
 import { AddEntryDialog } from "@/components/add-entry-dialog";
-import type { Entry } from "@/lib/types";
 
 const Home = () => {
   const [entries, setEntries] = useState<Entry[]>([]);
@@ -13,18 +12,25 @@ const Home = () => {
 
   useEffect(() => {
     fetch("/api/entries")
-      .then((res) => res.json())
-      .then((data) => setEntries(data));
+      .then((res) => (res.ok ? res.json() : Promise.reject()))
+      .then((data: Entry[]) => setEntries(data))
+      .catch(() => {});
   }, []);
 
-  const handleAdd = async (entry: Entry) => {
-    const res = await fetch("/api/entries", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(entry),
-    });
-    const data = (await res.json()) as Entry[];
-    setEntries(data);
+  const handleAdd = async (entry: Entry): Promise<boolean> => {
+    try {
+      const res = await fetch("/api/entries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(entry),
+      });
+      if (!res.ok) return false;
+      const data = (await res.json()) as Entry[];
+      setEntries(data);
+      return true;
+    } catch {
+      return false;
+    }
   };
 
   return (

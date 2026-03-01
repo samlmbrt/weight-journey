@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { type FormEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -8,10 +8,13 @@ import { Label } from "@/components/ui/label";
 import type { Entry } from "@/lib/types";
 
 interface AddEntryDialogProps {
-  onAdd: (entry: Entry) => void;
+  onAdd: (entry: Entry) => Promise<boolean>;
 }
 
-const todayISO = () => new Date().toISOString().split("T")[0];
+const todayISO = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+};
 
 const FIELDS = [
   { id: "date", label: "Date", type: "date" },
@@ -26,14 +29,16 @@ export const AddEntryDialog = ({ onAdd }: AddEntryDialogProps) => {
 
   const updateField = (id: string, value: string) => setValues((prev) => ({ ...prev, [id]: value }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onAdd({
-      date: values.date,
-      weight: parseFloat(values.weight),
-      bmi: parseFloat(values.bmi),
-      waist: parseFloat(values.waist),
-    });
+    const weight = parseFloat(values.weight);
+    const bmi = parseFloat(values.bmi);
+    const waist = parseFloat(values.waist);
+    if (isNaN(weight) || isNaN(bmi) || isNaN(waist)) return;
+
+    const ok = await onAdd({ date: values.date, weight, bmi, waist });
+    if (!ok) return;
+
     setValues({ date: todayISO(), weight: "", bmi: "", waist: "" });
     setOpen(false);
   };
