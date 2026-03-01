@@ -31,9 +31,9 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col min-h-screen p-6 gap-4">
+    <main className="flex flex-col h-screen p-6 gap-4">
       <MetricSelector selected={metric} onSelect={setMetric} />
-      <div className="flex-1 min-h-0">
+      <div className="flex-1 min-h-0 w-full">
         <MetricChart data={entries} metric={metric} />
       </div>
       <div className="flex justify-center">
